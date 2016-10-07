@@ -1,4 +1,4 @@
-// Update with your config settings.
+require('dotenv').config({silent: true});
 
 module.exports = {
 
@@ -7,36 +7,8 @@ module.exports = {
     connection: 'postgres://localhost/flake'
   },
 
-  staging: {
-    client: 'postgresql',
-    connection: {
-      database: 'my_db',
-      user:     'username',
-      password: 'password'
-    },
-    pool: {
-      min: 2,
-      max: 10
-    },
-    migrations: {
-      tableName: 'knex_migrations'
-    }
-  },
-
   production: {
-    client: 'postgresql',
-    connection: {
-      database: 'my_db',
-      user:     'username',
-      password: 'password'
-    },
-    pool: {
-      min: 2,
-      max: 10
-    },
-    migrations: {
-      tableName: 'knex_migrations'
-    }
+    client: 'pg',
+    connection: 'postgres://arrllqqjdqrzba:3Io48sw8XSYSGSB4ThdvfHkDkd@ec2-54-235-119-42.compute-1.amazonaws.com:5432/d821rc5crqn5m1' + '?ssl=true'
   }
-
 };
