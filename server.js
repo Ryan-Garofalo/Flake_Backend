@@ -14,43 +14,44 @@ app.all('/*', function(req, res, next) {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-var ingredients = [
-    {
-        "id": "234kjw",
-        "text": "Eggs"
-    },
-    {
-        "id": "as82w",
-        "text": "Milk"
-    },
-    {
-        "id": "234sk1",
-        "text": "Bacon"
-    },
-    {
-        "id": "ppo3j3",
-        "text": "Frog Legs"
-    }
-];
 
 app.get('/animals', function(req,res){
-    console.log("hit this");
     knex.raw("SELECT * FROM users").then(function(data){
       res.send(data.rows);
     })
 });
-
-
-app.get('/ingredients', function(req, res) {
-    console.log("GET From SERVER");
-    res.send(ingredients);
+app.get('/squad', function(req,res){
+    console.log("hit this squad");
+    knex.raw("SELECT * FROM friends WHERE friend1_id='Ryan'").then(function(data){
+      res.send(data.rows);
+    })
+});
+app.get('/events', function(req,res){
+    knex.raw("SELECT * FROM events WHERE organizer_id='1'").then(function(data){
+      console.log(data.rows);
+      res.send(data.rows);
+    })
+});
+app.get('/fr', function(req,res){
+    console.log("hit this events");
+    knex.raw("SELECT * FROM users WHERE name='Ryan'").then(function(data){
+      res.send(data.rows);
+    })
 });
 
-app.post('/ingredients', function(req, res) {
-    var ingredient = req.body;
+app.post('/form', function(req, res) {
+    console.log("hit post");
     console.log(req.body);
-    ingredients.push(ingredient);
-    res.status(200).send("Successfully posted ingredient");
+    var name = req.body[0];
+    var date = req.body[1];
+    var activity = req.body[2];
+    var public = req.body[3];
+    console.log(`INSERT INTO events values(default,'${name}','${date}','${activity}','1','${public}');`);
+    knex.raw(`INSERT INTO events values(default,'${name}','${date}','${activity}','1','${public}');`).then(function(data){
+      console.log(data);
+      res.status(200).send("Successfully posted ingredient");
+    })
+
 });
 
 app.listen(process.env.PORT || '3000');
