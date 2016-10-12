@@ -3,6 +3,7 @@ exports.up = function(knex, Promise) {
     table.increments('id');
     table.string('name');
     table.integer('fr');
+    table.integer('events');
     table.timestamps();
   })
 };
